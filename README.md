@@ -94,6 +94,8 @@ role_map = {
 ```
 
 Modify that dictionary so that it has the emoji and roles you care about.
+All the keys in the dictionary (the bits before the `:`) are the emoji's we want people to react with and the values (the bit after the `:`) are the name of the role we want them to be assigned.
+If you are using custom emoji it won't have a little picture but instead you will use the name of the emoji itself.
 With that done we are ready to turn on our bot.
 
 ### Running The Bot
