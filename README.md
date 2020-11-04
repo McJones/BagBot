@@ -15,7 +15,7 @@ Next you will need some python libraries, both of which are on pip already, luck
 ### Requirements
 
 - discord.py
-- dotenv
+- python-dotenv
 
 Ok with those done you now need to clone the repo: `git clone https://github.com/McJones/BagBot.git` to wherever you like to keep your projects.
 Now it is time to set up the discord developer API side of things.
