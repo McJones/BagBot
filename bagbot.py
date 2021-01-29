@@ -18,6 +18,7 @@ role_map = {
     '🥚' : 'Destiny',
     '🛳️' : 'Sea of Friends',
     '🔪' : 'Among Us',
+    '🍿' : 'Watch Party',
     '💯' : 'The Living Embodiment Of The 100 Emoji'} # an emoji that connects to a non-role for testing purposes
 
 # we need member intents for role assignment to work
