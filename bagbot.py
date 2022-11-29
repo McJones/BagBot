@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import os
+import emoji
 from dotenv import load_dotenv
 
 load_dotenv('.env')
@@ -14,13 +15,17 @@ MESSAGE_ID = int(os.getenv('REACTION_MESSAGE_ID'))
 # that allows for new roles and emjoi to be created dynamically
 # but it also feels a bit brittle to me and relies on custom emoji
 # far better in my mind to have to have it human configured
+
+# We're using emoji.demojize to convert emoji (which may be multi-byte, and
+# therefore may not compare properly with the emoji names that discord reaction
+# payloads have) to shortcuts (so 🥚 is turned into the UTF-8 string "egg").
 role_map = {
-    '🥚' : 'Destiny',
-    '🛳️' : 'Sea of Friends',
-    '🔪' : 'Among Us',
-    '🍿' : 'Watch Party',
-    '⛏' : 'Minecraft',
-    '💯' : 'The Living Embodiment Of The 100 Emoji'} # an emoji that connects to a non-role for testing purposes
+    emoji.demojize('🥚') : 'Destiny',
+    emoji.demojize('🛳️') : 'Sea of Friends',
+    emoji.demojize('🔪') : 'Among Us',
+    emoji.demojize('🍿') : 'Watch Party',
+    emoji.demojize('⛏') : 'Minecraft',
+    emoji.demojize('💯') : 'The Living Embodiment Of The 100 Emoji'} # an emoji that connects to a non-role for testing purposes
 
 # we need member intents for role assignment to work
 # this is because discord otherwise won't give use the data needed to identify WHO is reacting to things
@@ -91,7 +96,7 @@ async def on_raw_reaction_remove(payload):
         print(f"Unable to identify the emoji {payload.emoji}")
         return
     
-    role_name = role_map.get(payload.emoji.name)
+    role_name = role_map.get(emoji.demojize(payload.emoji.name))
     if role_name is None:
         print("unrecognised role")
         #await channel.send(f"That dashing looking blob {member.nick} removed their invalid role emoji, well done blob.")
@@ -139,7 +144,7 @@ async def on_raw_reaction_add(payload):
         #await channel.send(f"Hey {member.nick}, you reacted with an emoji but I cannot identify it, sorry. Don't blame me, blame my programmer")
         return
     
-    role_name = role_map.get(payload.emoji.name)
+    role_name = role_map.get(emoji.demojize(payload.emoji.name))
     if role_name is None:
         print(f"unrecognised role {payload.emoji.name}")
         #await channel.send(f"That Fool Of A Took {member.nick}™ reacted with an invalid role emoji!")
