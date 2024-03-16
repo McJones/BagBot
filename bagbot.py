@@ -25,6 +25,8 @@ role_map = {
     emoji.demojize('🔪') : 'Among Us',
     emoji.demojize('🍿') : 'Watch Party',
     emoji.demojize('⛏') : 'Minecraft',
+    emoji.demojize('🖖') : 'Star Trek Adventures',
+    emoji.demojize('🪲') : 'Helldivers',
     emoji.demojize('💯') : 'The Living Embodiment Of The 100 Emoji'} # an emoji that connects to a non-role for testing purposes
 
 # we need member intents for role assignment to work
@@ -68,15 +70,15 @@ async def on_message(message):
 async def on_raw_reaction_remove(payload):
     channel = discord.utils.get(client.get_all_channels(), id=payload.channel_id)
     if channel is None:
-        print("Unable to locate the channel")
+        print("Reaction happened in a channel that we can't locate?")
         return
 
     if channel.name != REACTION_CHANNEL:
-        print("Reaction is in a channel we don't care about")
+        # print("Reaction is in a channel we don't care about")
         return
     
     if payload.message_id != MESSAGE_ID:
-        print(f"Reaction is to a message we don't care about: {payload.message_id} vs {MESSAGE_ID}")
+        # print(f"Reaction is to a message we don't care about: {payload.message_id} vs {MESSAGE_ID}")
         return
     
     guild = discord.utils.get(client.guilds, id=payload.guild_id)
